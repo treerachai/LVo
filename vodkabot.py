@@ -47,37 +47,6 @@ def NOTIFIED_ADD_CONTACT(op):
 
 tracer.addOpInterrupt(5,NOTIFIED_ADD_CONTACT)
 
-def NOTIFIED_ACCEPT_GROUP_INVITATION(op):
-    #print op
-    try:
-        sendMessage(op.param1, client.getContact(op.param2).displayName + "WELCOME to " + group.name)
-    except Exception as e:
-        print e
-        print ("\n\nNOTIFIED_ACCEPT_GROUP_INVITATION\n\n")
-        return
-
-tracer.addOpInterrupt(17,NOTIFIED_ACCEPT_GROUP_INVITATION)
-
-def NOTIFIED_KICKOUT_FROM_GROUP(op):
-    try:
-        sendMessage(op.param1, client.getContact(op.param3).displayName + " Good Bye\n(*´･ω･*)")
-    except Exception as e:
-        print e
-        print ("\n\nNOTIFIED_KICKOUT_FROM_GROUP\n\n")
-        return
-
-tracer.addOpInterrupt(19,NOTIFIED_KICKOUT_FROM_GROUP)
-
-def NOTIFIED_LEAVE_GROUP(op):
-    try:
-        sendMessage(op.param1, client.getContact(op.param2).displayName + " Good Bye\n(*´･ω･*)")
-    except Exception as e:
-        print e
-        print ("\n\nNOTIFIED_LEAVE_GROUP\n\n")
-        return
-
-tracer.addOpInterrupt(15,NOTIFIED_LEAVE_GROUP)
-
 def NOTIFIED_READ_MESSAGE(op):
     #print op
     try:
@@ -170,15 +139,15 @@ def SEND_MESSAGE(op):
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if "kick @" in msg.text:
-                    nk0 = msg.text.replace("kick @ ","")
+                    nk0 = msg.text.replace("kick @","")
                     nk1 = nk0.lstrip()
                     nk2 = nk1.replace("@","")
                     nk3 = nk2.rstrip()
                     Names = nk3
-                    gs = cl.getGroup(msg.to)
+                    gs = client.getGroup(msg.to)
                     targets = []
                     for s in gs.members:
-                        if Names in s.displayName:
+                        if Names in gs.displayName:
                            targets.append(s.mid)
                     if targets == []:
                         sendMessage(msg.to,"Nama tidak ditemukan.")
@@ -189,7 +158,7 @@ def SEND_MESSAGE(op):
                                  klist=[client]
                                  kicker=random.choice(klist)
                                  kicker.kickoutFromGroup(msg.to,[target])
-                                 print (msg.to,[g.mid])
+                                 print (msg.to,[gs.mid])
                              except:
                                  client.sendText(msg.to, Names + " telah dihapus dari grup.")
                 if msg.text == "cancel":
