@@ -200,8 +200,8 @@ def SEND_MESSAGE(op):
                         gInviMids = [contact.mid for contact in group.invitee]
                         client.cancelGroupInvitation(msg.to, gInviMids)
                         sendMessage(msg.to, str(len(group.invitee)) + " undangan dibatalkan.")
-				if msg.text == "keyword":
-		    		sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-nk\n-cancel\n-me\n-time\n-point\n-check")
+		if msg.text == "keyword":
+		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-nk\n-cancel\n-me\n-time\n-point\n-check")
                 if msg.text == "me":
                     M = Message()
                     M.to = msg.to
