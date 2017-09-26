@@ -138,9 +138,6 @@ def nameUpdate():
             time.sleep(60)
         except:
             pass
-thread2 = threading.Thread(target=nameUpdate)
-thread2.daemon = True
-thread2.start()
 
 def bot(op):
     try:
