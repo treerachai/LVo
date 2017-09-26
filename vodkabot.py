@@ -17,11 +17,11 @@ offbot, messageReq, wordsArray, waitingAnswer = [], {}, {}, {}
 print client._loginresult()
 
 wait = {
-	'readPoint':{},
-	'readMember':{},
-	'setTime':{},
-	'ROM':{}
-}
+    'readPoint':{},
+    'readMember':{},
+    'setTime':{},
+    'ROM':{}
+   }
 
 setTime = {}
 setTime = wait["setTime"]
@@ -35,10 +35,11 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
     if to not in messageReq:
         messageReq[to] = -1
     messageReq[to] += 1
+    client._client.sendMessage(messageReq[to], mes)
 
 def NOTIFIED_ADD_CONTACT(op):
     try:
-        sendMessage(op.param1, "Terima kasih " + client.getContact(op.param1).displayName + " telah menambahkan saya sebagai teman :]")
+        sendMessage(op.param1, client.getContact(op.param1).displayName + "Thanks for add")
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_ADD_CONTACT\n\n")
@@ -46,35 +47,36 @@ def NOTIFIED_ADD_CONTACT(op):
 
 tracer.addOpInterrupt(5,NOTIFIED_ADD_CONTACT)
 
+def NOTIFIED_ACCEPT_GROUP_INVITATION(op):
+    #print op
+    try:
+        sendMessage(op.param1, client.getContact(op.param2).displayName + "WELCOME to " + group.name)
+    except Exception as e:
+        print e
+        print ("\n\nNOTIFIED_ACCEPT_GROUP_INVITATION\n\n")
+        return
+
+tracer.addOpInterrupt(17,NOTIFIED_ACCEPT_GROUP_INVITATION)
+
+def NOTIFIED_KICKOUT_FROM_GROUP(op):
+    try:
+        sendMessage(op.param1, client.getContact(op.param3).displayName + " Good Bye\n(*´･ω･*)")
+    except Exception as e:
+        print e
+        print ("\n\nNOTIFIED_KICKOUT_FROM_GROUP\n\n")
+        return
+
+tracer.addOpInterrupt(19,NOTIFIED_KICKOUT_FROM_GROUP)
+
 def NOTIFIED_LEAVE_GROUP(op):
     try:
-        sendMessage(op.param1, client.getContact(op.param2).displayName + " meninggalkan grup.")
+        sendMessage(op.param1, client.getContact(op.param2).displayName + " Good Bye\n(*´･ω･*)")
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_LEAVE_GROUP\n\n")
         return
 
 tracer.addOpInterrupt(15,NOTIFIED_LEAVE_GROUP)
-
-def NOTIFIED_KICKOUT_FROM_GROUP(op):
-    try:
-        sendMessage(op.param1, client.getContact(op.param2).displayname + " menghapus " + client.getContact(op.param3).displayname + " dari grup.")
-    except Exception as e:
-        print e
-        print ("\n\nNOTIFIED_LEAVE_GROUP\n\n")
-        return
-
-tracer.addOpInterrupt(19,NOTIFIED_KICKOUT_FROM_GROUP)
-
-def NOTIFIED_INVITE_INTO_ROOM(op):
-    try:
-        sendMessage(op.param1, client.getContact(op.param2).displayname + " menginvite " + client.getContact(op.param3).displayname + " ke grup.")
-    except Exception as e:
-        print e
-	print ("\n\nNOTIFIED_INVITE_INTO_ROOM\n\n")
-	return
-
-tracer.addOpInterrupt(22,NOTIFIED_INVITE_INTO_ROOM)
 
 def NOTIFIED_READ_MESSAGE(op):
     #print op
@@ -90,6 +92,8 @@ def NOTIFIED_READ_MESSAGE(op):
             pass
     except:
         pass
+
+tracer.addOpInterrupt(55, NOTIFIED_READ_MESSAGE)
 
 def RECEIVE_MESSAGE(op):
     msg = op.message
@@ -187,28 +191,28 @@ def SEND_MESSAGE(op):
                                  kicker.kickoutFromGroup(msg.to,[target])
                                  print (msg.to,[g.mid])
                              except:
-                                 ki.sendText(msg.to, Names + " telah dihapus dari grup.")
+                                 client.sendText(msg.to, Names + " telah dihapus dari grup.")
                 if "kickall" in msg.text:
                     if msg.toType == 2:
                         print "ok"
                         Names = msg.text.replace("kickall","")
                         groups = client.getGroup(msg.to)
-			client.sendText(msg.to,"Tangkis om")
-			targets = []
-			for g in groups.members:
-			    if Names in g.displayName:
-				targets.append(group.mid)
-			if targets == []:
-			    client.sendText(msg.to,"Tidak ada anggota.")
-			else:
-			    for target in targets:
-				try:
-				    klist=[client]
-				    kicker=random.choice(klist)
-				    kicker.kickoutFromGroup(msg.to,[target])
-				    print (msg.to,[group.mid])
-				except:
-				    client.sendText(msg.to,"Tangkis om")
+						client.sendText(msg.to,"Tangkis om")
+						targets = []
+						for g in groups.members:
+			    			if Names in g.displayName:
+								targets.append(group.mid)
+						if targets == []:
+			    			client.sendText(msg.to,"Tidak ada anggota.")
+						else:
+			   				for target in targets:
+								try:
+				  					klist=[client]
+				   					kicker=random.choice(klist)
+				    				kicker.kickoutFromGroup(msg.to,[target])
+				    				print (msg.to,[group.mid])
+								except:
+				    				client.sendText(msg.to,"Tangkis om")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
@@ -217,8 +221,8 @@ def SEND_MESSAGE(op):
                         gInviMids = [contact.mid for contact in group.invitee]
                         client.cancelGroupInvitation(msg.to, gInviMids)
                         sendMessage(msg.to, str(len(group.invitee)) + " undangan dibatalkan.")
-		if msg.text == "keyword":
-		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-nk\n-cancel\n-me\n-time\n-point\n-check")
+				if msg.text == "keyword":
+		    		sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-nk\n-cancel\n-me\n-time\n-point\n-check")
                 if msg.text == "me":
                     M = Message()
                     M.to = msg.to
