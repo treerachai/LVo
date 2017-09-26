@@ -192,27 +192,6 @@ def SEND_MESSAGE(op):
                                  print (msg.to,[g.mid])
                              except:
                                  client.sendText(msg.to, Names + " telah dihapus dari grup.")
-                if "kickall" in msg.text:
-                    if msg.toType == 2:
-                        print "ok"
-                        Names = msg.text.replace("kickall","")
-                        groups = client.getGroup(msg.to)
-						client.sendText(msg.to,"Tangkis om")
-						targets = []
-						for g in groups.members:
-			    			if Names in g.displayName:
-								targets.append(group.mid)
-						if targets == []:
-			    			client.sendText(msg.to,"Tidak ada anggota.")
-						else:
-			   				for target in targets:
-								try:
-				  					klist=[client]
-				   					kicker=random.choice(klist)
-				    				kicker.kickoutFromGroup(msg.to,[target])
-				    				print (msg.to,[group.mid])
-								except:
-				    				client.sendText(msg.to,"Tangkis om")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
