@@ -23,16 +23,6 @@ wait = {
 	'ROM':{}
 }
 
-wait2 = {
-	'autoJoin':True,
-	'autoCancel':{"on":True,"members":1},
-	'autoAdd':True,
-	'message':"Thanks for add me",
-	"clock":True,
-	"cName":"Safiqq ",
-	"blacklist":{}
-}
-	
 setTime = {}
 setTime = wait["setTime"]
 
@@ -123,99 +113,6 @@ def RECEIVE_MESSAGE(op):
         return
 
 tracer.addOpInterrupt(26, RECEIVE_MESSAGE)
-
-def nameUpdate():
-    while True:
-        try:
-        #while a2():
-            #pass
-            if wait2["clock"] == True:
-                now2 = datetime.now()
-                nowT = datetime.strftime(now2,"(%H:%M)")
-                profile = client.getProfile()
-                profile.displayName = wait2["cName"] + nowT
-                client.updateProfile(profile)
-            time.sleep(60)
-        except:
-            pass
-
-def bot(op):
-    try:
-        if op.type == 0:
-            return
-        if op.type == 5:
-            if wait2 ["autoAdd"] == True:
-                client.findAndAddContactsByMid(op.param1)
-                if (wait2["message"] in [""," ","\n",None]):
-                    pass
-                else:
-                    cl.sendText(op.param1,str(wait2["message"]))
-        if op.type == 13:
-            print op.param1
-            print op.param2
-            print op.param3
-            if mid in op.param3:
-                G = client.getGroup(op.param1)
-                if wait2["autoJoin"] == True:
-                    if wait2["autoCancel"]["on"] == True:
-                        if len(G.members) <= wait2["autoCancel"]["members"]:
-                            client.rejectGroupInvitation(op.param1)
-                        else:
-                            client.acceptGroupInvitation(op.param1)
-                    else:
-                        client.acceptGroupInvitation(op.param1)
-                elif wait2["autoCancel"]["on"] == True:
-                    if len(G.members) <= wait2["autoCancel"]["members"]:
-                            client.rejectGroupInvitation(op.param1)
-            else:
-                Inviter = op.param3.replace("",',')
-                InviterX = Inviter.split(",")
-                matched_list = []
-                for tag in wait2["blacklist"]:
-                    matched_list+=filter(lambda str: str == tag, InviterX)
-                if matched_list == []:
-                    pass
-                else:
-                    client.cancelGroupInvitation(op.param1, matched_list)
-        if op.type == 19:
-                if mid in op.param3:
-                    if op.param2 in Bots:
-                        pass
-                    try:
-                        client.kickoutFromGroup(op.param1,[op.param2])
-                    except:
-                        try:
-                            random.choice(KAC).kickoutFromGroup(op.param1,[op.param2])
-                        except:
-                            print ("Kicked ["+op.param1+"] by ["+op.param2+"[")
-                        if op.param2 in wait2["blacklist"]:
-                            pass
-                        if op.param2 in wait2["whitelist"]:
-                            pass
-                        else:
-                            wait2["blacklist"][op.param2] = True
-                    G = client.getGroup(op.param1)
-                    G.preventJoinByTicket = False
-                    client.updateGroup(G)
-                    Ti = client.reissueGroupTicket(op.param1)
-                    client.acceptGroupInvitationByTicket(op.param1,Ti)
-                    X = client.getGroup(op.param1)
-                    X.preventJoinByTicket = True
-                    client.updateGroup(X)
-                    Ti = client.reissueGroupTicket(op.param1)
-                    if op.param2 in wait2["blacklist"]:
-                        pass
-                    if op.param2 in wait2["whitelist"]:
-                        pass
-                    else:
-                        wait2["blacklist"][op.param2] = True
-        if op.type == 59:
-            print op
-
-
-    except Exception as error:
-        print error
-
 		
 def SEND_MESSAGE(op):
     msg = op.message
@@ -268,17 +165,6 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                if msg.text == "jam":
-                    if wait2["clock"] == True:
-                        client.sendText(msg.to,"Jam diperbarui!")
-                    else:
-			wait2["clock"] = True
-                        now2 = datetime.now()
-                        nowT = datetime.strftime(now2,"(%H:%M)")
-                        profile = client.getProfile()
-                        profile.displayName = wait2["cName"] + nowT
-                        client.updateProfile(profile)
-                        client.sendText(msg.to,"Jam diperbarui!")
                 if "kick @" in msg.text:
                     nk0 = msg.text.replace("kick @ ","")
                     nk1 = nk0.lstrip()
@@ -302,56 +188,6 @@ def SEND_MESSAGE(op):
                                  print (msg.to,[g.mid])
                              except:
                                  ki.sendText(msg.to, Names + " telah dihapus dari grup.")
-                if "ban @" in msg.text:
-		    ban0 = msg.text.replace("ban @ ","")
-		    ban1 = ban0.lstrip()
-		    ban2 = ban1.replace("@","")
-		    ban3 = ban2.rstrip()
-                    msg.toType == 2
-                    print "[Ban]ok"
-                    Names = [contact.displayName for contact in group.members]("unban @","")
-                    nameTarget = Names.rstrip('  ')
-                    group = client.getGroup(msg.to)
-                    targets = []
-                    for group in group.members:
-                        if nameTarget == group.displayName:
-                            targets.append(group.mid)
-                    if targets == []:
-                        client.sendText(msg.to,"Nama tidak ditemukan.")
-                    else:
-                        for target in targets:
-                            try:
-                                wait2["blacklist"][target] = True
-                                f=codecs.open('st2__b.json','w','utf-8')
-                                json.dump(wait2["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-                                client.sendText(msg.to, Names + " telah ditambahkan ke daftar bl.")
-                            except:
-                                client.sendText(msg.to, "Nama tidak ditemukan.")
-                if "unban @" in msg.text:
-		    unban0 = msg.text.replace("unban @ ","")
-		    unban1 = unban0.lstrip()
-		    unban2 = unban1.replace("@","")
-		    unban3 = unban2.rstrip()
-                    msg.toType == 2
-                    print "[Unban]ok"
-                    Names = [contact.displayName for contact in group.members]("unban @","")
-                    nameTarget = Names.rstrip('  ')
-                    group = client.getGroup(msg.to)
-                    targets = []
-                    for group in group.members:
-                        if nameTarget == group.displayName:
-                                targets.append(group.mid)
-                        if targets == []:
-                            client.sendText(msg.to,"Nama tidak ditemukan.")
-                        else:
-                            for target in targets:
-                                try:
-                                    del wait2["blacklist"][target]
-                                    f=codecs.open('st2__b.json','w','utf-8')
-                                    json.dump(wait2["blacklist"], f, sort_keys=True, indent=4,ensure_ascii=False)
-                                    client.sendText(msg.to, Names + " berhasil di unban.")
-                                except:
-                                    client.sendText(msg.to, Names + " berhasil di unban.")
                 if "kickall" in msg.text:
                     if msg.toType == 2:
                         print "ok"
