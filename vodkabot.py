@@ -140,14 +140,8 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if "kickall" in msg.text:
                     group = client.getGroup(msg.to)
-                    Names = [contact.displayName for contact in group.members]
-		    Mids = [contact.mid for contact in group.members]
-                    if key in Names:
-                        kazu = Names.index(key)
-                        client.kickoutFromGroup(msg.to, Mids)
-                        sendMessage(msg.to, ""+Names+" telah dihapus dari grup.")
-                    else:
-                        sendMessage(msg.to, "Kontak tidak ditemukan.")
+                    gMemMids = [contact.mid for contact in group.invitee]
+                        client.kickoutFromGroup(msg.to, gMemMids)
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
