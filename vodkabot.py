@@ -139,28 +139,17 @@ def SEND_MESSAGE(op):
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if "kick @" in msg.text:
-                    nk0 = msg.text.replace("kick @","")
-                    nk1 = nk0.lstrip()
-                    nk2 = nk1.replace("@","")
-                    nk3 = nk2.rstrip()
-                    Names = nk3
-                    gs = client.getGroup(msg.to)
-                    targets = []
-                    for s in gs.members:
-                        if Names in gs.displayName:
-                           targets.append(s.mid)
-                    if targets == []:
-                        sendMessage(msg.to,"Nama tidak ditemukan.")
-                        pass
+                    key = msg.text[3:]
+                    group = client.getGroup(msg.to)
+                    Names = [contact.displayName for contact in group.members]
+                    Mids = [contact.mid for contact in group.members]
+                    if key in Names:
+                        kazu = Names.index(key)
+                        client.kickoutFromGroup(msg.to, [""+Mids[kazu]+""])
+                        contact = client.getContact(Mids[kazu])
+                        sendMessage(msg.to, ""+contact.displayName+" telah dihapus dari grup.")
                     else:
-                        for target in targets:
-                             try:
-                                 klist=[client]
-                                 kicker=random.choice(klist)
-                                 kicker.kickoutFromGroup(msg.to,[target])
-                                 print (msg.to,[gs.mid])
-                             except:
-                                 client.sendText(msg.to, Names + " telah dihapus dari grup.")
+                        sendMessage(msg.to, "Kontak tidak ditemukan.)
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
