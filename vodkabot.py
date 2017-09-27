@@ -149,7 +149,7 @@ def SEND_MESSAGE(op):
                         contact = client.getContact(Mids[kazu])
                         sendMessage(msg.to, ""+contact.displayName+" telah dihapus dari grup.")
                     else:
-                        sendMessage(msg.to, "Kontak tidak ditemukan.)
+                        sendMessage(msg.to, "Kontak tidak ditemukan.")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
