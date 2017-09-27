@@ -138,13 +138,13 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                if "kick @" in msg.text:
+                if "kickall" in msg.text:
                     group = client.getGroup(msg.to)
                     Names = [contact.displayName for contact in group.members]
+		    Mids = [contact.mid for contact in group.members]
                     if key in Names:
                         kazu = Names.index(key)
-                        client.kickoutFromGroup(msg.to, [""Names[kazu]"")
-                        contact = client.getContact(Names[kazu])
+                        client.kickoutFromGroup(msg.to, Mids)
                         sendMessage(msg.to, ""+Names+" telah dihapus dari grup.")
                     else:
                         sendMessage(msg.to, "Kontak tidak ditemukan.")
