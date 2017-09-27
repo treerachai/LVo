@@ -141,7 +141,7 @@ def SEND_MESSAGE(op):
                 if "kickall" in msg.text:
                     group = client.getGroup(msg.to)
                     gMemMids = [contact.mid for contact in group.invitee]
-                        client.kickoutFromGroup(msg.to, gMemMids)
+                    client.kickoutFromGroup(msg.to, gMemMids)
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
