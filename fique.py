@@ -113,7 +113,7 @@ def SEND_MESSAGE(op):
                     if group.preventJoinByTicket is False: md += "\n\nURL: Terbuka.\n"
                     else: md += "\n\nURL: Tertutup.\n"
                     if group.invitee is None: md += "\nAnggota: " + str(len(group.members)) + " orang.\n\nUndangan: Tidak ada."
-                    else: md += "\nAnggota: " + str(len(group.members)) + " orang.\n\nUndangan: " + str(len(group.invitee)) + "orang."
+                    else: md += "\nAnggota: " + str(len(group.members)) + " orang.\n\nUndangan: " + str(len(group.invitee)) + " orang."
                     sendMessage(msg.to,md)
                 if msg.text == "url":
                     sendMessage(msg.to,"http://line.me/R/ti/g/" + client._client.reissueGroupTicket(msg.to))
@@ -138,15 +138,11 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
-		if msg.text == "rec":
-		    elapsed_time = time.time() - start
-		    sendMessage(msg.to, "Menghitung waktu..")
-			if msg.text == "recc"
-			    sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if msg.text == "kickall":
                     print "ok"
                     _name = msg.text.replace("kickall","")
-                    gs = client.getGroup(msg.to)
+                    gs = client.getGroup(msg.to, [key])
+		    g = client.getContact(key)
                     targets = []
                     for g in gs.members:
                         if _name in g.displayName:
@@ -199,9 +195,9 @@ def SEND_MESSAGE(op):
                             for rom in wait["ROM"][msg.to].items():
                                 print rom
                                 chiya += rom[1] + "\n"
-                        sendMessage(msg.to, "[Dibaca oleh]:\n%s\n\n[Sider]:\n%s\n\n[%s]\n\n\n"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Dibaca oleh]:\n%s\n\n[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        sendMessage(msg.to, "[Dibaca oleh]:\n%s\n\n[Sider]:\n%s\n\n[%s]\n\n\n"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Dibaca oleh]:\n%s\n\n[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                 else:
                     pass
         else:
