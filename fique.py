@@ -138,11 +138,15 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
+		if msg.text == "rec":
+		    elapsed_time = time.time() - start
+		    sendMessage(msg.to, "Menghitung waktu..")
+			elif msg.text == "recc"
+			    sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if msg.text == "kickall":
                     print "ok"
                     _name = msg.text.replace("kickall","")
                     gs = client.getGroup(msg.to)
-                    elapsed_time = time.time() - start
                     targets = []
                     for g in gs.members:
                         if _name in g.displayName:
@@ -153,10 +157,9 @@ def SEND_MESSAGE(op):
                         for target in targets:
                             try:
                                 client.kickoutFromGroup(msg.to,[target])
-				sendMessage(msg.to, "%sseconds" % (elapsed_time))
                                 print (msg.to,[g.mid])
                             except:
-                                sendText(msg.to,"error")
+                                sendText(msg.to," _Error69")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
