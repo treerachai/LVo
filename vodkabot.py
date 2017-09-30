@@ -138,10 +138,27 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                if "kickall" in msg.text:
-                    group = client.getGroup(msg.to)
-                    gMemMids = [contact.mid for contact in group.invitee]
-                    client.kickoutFromGroup(msg.to, gMemMids)
+                if msg.text == "kickall":
+                    print "ok"
+                    _name = msg.text.replace("kickall","")
+                    gs = client.getGroup(msg.to)
+                    elapsed_time = time.time() - start
+                    targets = []
+                    for g in gs.members:
+                        if _name in g.displayName:
+                            targets.append(g.mid)
+                    if targets == []:
+                        sendMessage(msg.to,"+%¥_Error 404_#@$")
+                    else:
+                        for target in targets:
+                            try:
+                                klist=[client]
+                                kicker=random.choice(klist)
+                                kicker.kickoutFromGroup(msg.to,[target])
+				sendMessage(msg.to, "%sseconds" % (elapsed_time))
+                                print (msg.to,[g.mid])
+                            except:
+                                sendText(msg.to,"error")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
