@@ -168,7 +168,7 @@ def SEND_MESSAGE(op):
                         client.cancelGroupInvitation(msg.to, gInviMids)
                         sendMessage(msg.to, str(len(group.invitee)) + " undangan dibatalkan.")
 		if msg.text == "keyword":
-		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-nk\n-cancel\n-me\n-time\n-point\n-check")
+		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-speed\n-cancel\n-me\n-time\n-point\n-check\n-sider")
                 if msg.text == "me":
                     M = Message()
                     M.to = msg.to
@@ -176,7 +176,7 @@ def SEND_MESSAGE(op):
                     M.contentMetadata = {'mid': msg.from_}
                     client.sendMessage(M)
                 if msg.text == "time":
-                    sendMessage(msg.to, "Sekarang jam " + datetime.datetime.today().strftime('%H:%M:%S'))
+                    sendMessage(msg.to, "Sekarang jam " + datetime.datetime.today().strftime('%H:%M:%S') + " WIB.")
                 if msg.text == "point":
                     sendMessage(msg.to, "Read point telah di set!")
                     try:
@@ -195,13 +195,13 @@ def SEND_MESSAGE(op):
                             chiya = ""
                         else:
                             chiya = ""
-                            for rom in wait["ROM"][msg.to].items():Sider:\n%s\n\n[%s]
+                            for rom in wait["ROM"][msg.to].items():
                                 print rom
                                 chiya += rom[1] + "\n"
 
                         sendMessage(msg.to, "[Dibaca oleh]:\n%s"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        sendMessage(msg.to, "Dibaca oleh:\n%s"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Dibaca oleh]:\n%s"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                 if msg.text == "sider":
                     if msg.to in wait['readPoint']:
                         if wait["ROM"][msg.to].items() == []:
