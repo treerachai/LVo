@@ -144,8 +144,8 @@ def SEND_MESSAGE(op):
                     gs = client.getGroup(msg.to)
                     elapsed_time = time.time() - start
                     targets = []
-                    for g in gs.members:
-                        if _name in g.displayName:
+                    for group in gs.members:
+                        if _name in group.displayName:
                             targets.append(g.mid)
                     if targets == []:
                         sendMessage(msg.to,"+%¥_Error 404_#@$")
@@ -156,7 +156,7 @@ def SEND_MESSAGE(op):
                                 kicker=random.choice(klist)
                                 kicker.kickoutFromGroup(msg.to,[target])
 				sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                                print (msg.to,[g.mid])
+                                print (msg.to,[group.mid])
                             except:
                                 sendText(msg.to,"error")
                 if msg.text == "cancel":
