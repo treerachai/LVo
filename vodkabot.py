@@ -146,7 +146,7 @@ def SEND_MESSAGE(op):
                     targets = []
                     for group in gs.members:
                         if _name in group.displayName:
-                            targets.append(g.mid)
+                            targets.append(group.mid)
                     if targets == []:
                         sendMessage(msg.to,"+%¥_Error 404_#@$")
                     else:
@@ -195,13 +195,26 @@ def SEND_MESSAGE(op):
                             chiya = ""
                         else:
                             chiya = ""
+                            for rom in wait["ROM"][msg.to].items():Sider:\n%s\n\n[%s]
+                                print rom
+                                chiya += rom[1] + "\n"
+
+                        sendMessage(msg.to, "[Dibaca oleh]:\n%s"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                    else:
+                        sendMessage(msg.to, "Dibaca oleh:\n%s"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                if msg.text == "sider":
+                    if msg.to in wait['readPoint']:
+                        if wait["ROM"][msg.to].items() == []:
+                            chiya = ""
+                        else:
+                            chiya = ""
                             for rom in wait["ROM"][msg.to].items():
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        sendMessage(msg.to, "Dibaca oleh:\n%s\n\nSider:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        sendMessage(msg.to, "Dibaca oleh:\n%s\n\nSider:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                 else:
                     pass
         else:
