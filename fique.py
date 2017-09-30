@@ -141,7 +141,7 @@ def SEND_MESSAGE(op):
 		if msg.text == "rec":
 		    elapsed_time = time.time() - start
 		    sendMessage(msg.to, "Menghitung waktu..")
-			elif msg.text == "recc"
+			if msg.text == "recc"
 			    sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if msg.text == "kickall":
                     print "ok"
