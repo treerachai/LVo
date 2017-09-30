@@ -139,23 +139,23 @@ def SEND_MESSAGE(op):
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
                 if msg.text == "kickall":
-                    print "ok"
                     _name = msg.text.replace("kickall","")
-                    gs = client.getGroup(msg.to, [key])
-		    g = client.getContact(key)
+                    gs = client.getGroup(msg.to)
+		    gmid = [contact.mid for contact in gs.members]
+		    g = client.getContact(msg.to)
                     targets = []
                     for g in gs.members:
                         if _name in g.displayName:
-                            targets.append(g.mid)
+                            targets.append(gmid)
                     if targets == []:
-                        sendMessage(msg.to,"error")
+                        sendMessage(msg.to, "_Error96")
                     else:
                         for target in targets:
                             try:
                                 client.kickoutFromGroup(msg.to,[target])
-                                print (msg.to,[g.mid])
+                                print (msg.to,[gmid])
                             except:
-                                sendText(msg.to," _Error69")
+                                sendMessage(msg.to, "_Error69")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
@@ -183,7 +183,7 @@ def SEND_MESSAGE(op):
                         pass
                     wait['readPoint'][msg.to] = msg.id
                     wait['readMember'][msg.to] = ""
-                    wait['setTime'][msg.to] = datetime.datetime.today().strftime('%H:%M:%S, %d %m %Y')
+                    wait['setTime'][msg.to] = datetime.datetime.today().strftime('%H:%M:%S, %d-%m-%Y')
                     wait['ROM'][msg.to] = {}
                     print wait
                 if msg.text == "check":
