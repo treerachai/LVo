@@ -212,9 +212,9 @@ def SEND_MESSAGE(op):
                                 print rom
                                 chiya += rom[1] + "\n"
 
-                        sendMessage(msg.to, "[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Sider]:\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                     else:
-                        sendMessage(msg.to, "[Sider]:\n%s\n\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
+                        sendMessage(msg.to, "[Sider]:\n[%s]"  % (wait['readMember'][msg.to],chiya,setTime[msg.to]))
                 else:
                     pass
         else:
