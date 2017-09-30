@@ -39,7 +39,7 @@ def sendMessage(to, text, contentMetadata={}, contentType=0):
 
 def NOTIFIED_ADD_CONTACT(op):
     try:
-        sendMessage(op.param1, client.getContact(op.param1).displayName + "Thanks for add")
+        sendMessage(op.param1, "Hi " + client.getContact(op.param1).displayName + ", thanks for add.")
     except Exception as e:
         print e
         print ("\n\nNOTIFIED_ADD_CONTACT\n\n")
@@ -144,19 +144,16 @@ def SEND_MESSAGE(op):
                     gs = client.getGroup(msg.to)
                     elapsed_time = time.time() - start
                     targets = []
-                    for group in gs.members:
-                        if _name in group.displayName:
-                            targets.append(group.mid)
+                    for g in gs.members:
+                        if _name in g.displayName:
+                            targets.append(g.mid)
                     if targets == []:
-                        sendMessage(msg.to,"+%¥_Error 404_#@$")
+                        sendMessage(msg.to,"error")
                     else:
                         for target in targets:
                             try:
-                                klist=[client]
-                                kicker=random.choice(klist)
-                                kicker.kickoutFromGroup(msg.to,[target])
-				sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                                print (msg.to,[group.mid])
+                                client.kickoutFromGroup(msg.to,[target])
+                                print (msg.to,[g.mid])
                             except:
                                 sendText(msg.to,"error")
                 if msg.text == "cancel":
