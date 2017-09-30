@@ -153,6 +153,7 @@ def SEND_MESSAGE(op):
                         for target in targets:
                             try:
                                 client.kickoutFromGroup(msg.to,[target])
+				sendMessage(msg.to, "%sseconds" % (elapsed_time))
                                 print (msg.to,[g.mid])
                             except:
                                 sendText(msg.to,"error")
