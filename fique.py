@@ -138,24 +138,6 @@ def SEND_MESSAGE(op):
                     sendMessage(msg.to, "Progress...")
                     elapsed_time = time.time() - start
                     sendMessage(msg.to, "%sseconds" % (elapsed_time))
-                if msg.text == "kickall":
-                    _name = msg.text.replace("kickall","")
-                    gs = client.getGroup(msg.to)
-		    gmid = [contact.mid for contact in gs.members]
-		    g = client.getContact(msg.to)
-                    targets = []
-                    for g in gs.members:
-                        if _name in g.displayName:
-                            targets.append(gmid)
-                    if targets == []:
-                        sendMessage(msg.to, "_Error96")
-                    else:
-                        for target in targets:
-                            try:
-                                client.kickoutFromGroup(msg.to,[target])
-                                print (msg.to,[gmid])
-                            except:
-                                sendMessage(msg.to, "_Error69")
                 if msg.text == "cancel":
                     group = client.getGroup(msg.to)
                     if group.invitee is None:
@@ -165,7 +147,7 @@ def SEND_MESSAGE(op):
                         client.cancelGroupInvitation(msg.to, gInviMids)
                         sendMessage(msg.to, str(len(group.invitee)) + " undangan dibatalkan.")
 		if msg.text == "keyword":
-		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-speed\n-cancel\n-me\n-time\n-point\n-check\n-sider")
+		    sendMessage(msg.to, "-mid\n-gid\n-ginfo\n-url\n-open\n-close\n-speed\n-cancel\n-me\n-time\n-point\n-check")
                 if msg.text == "me":
                     M = Message()
                     M.to = msg.to
